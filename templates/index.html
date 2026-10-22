@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#080a09">
+
+    <title>QuestCalc | Math Made Clear</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <main class="app">
+
+        <header class="topbar">
+
+            <a class="brand" href="/">
+
+                <span>QUEST</span><span class="green">CALC</span>
+
+            </a>
+
+            <span class="status"><span class="status-dot"></span> READY TO SOLVE</span>
+
+        </header>
+
+        <section class="hero">
+
+            <p class="eyebrow">YOUR PERSONAL MATH WORKSPACE</p>
+
+            <h1>Think it through.<br><span class="green">Solve it clearly.</span></h1>
+
+            <p class="subtitle">Calculate, solve equations, and understand every step.</p>
+
+        </section>
+
+        <section class="workspace">
+
+            <nav class="modes" aria-label="Calculator modes">
+
+                <button class="mode active" data-mode="calculator">Calculator</button>
+
+                <button class="mode" data-mode="solver">Equation Solver</button>
+
+                <button class="mode" data-mode="systems">Systems</button>
+
+            </nav>
+
+            <div class="panel">
+
+                <div class="panel-heading">
+
+                    <div>
+
+                        <p class="eyebrow" id="mode-label">STANDARD CALCULATOR</p>
+
+                        <h2 id="panel-title">Calculator</h2>
+
+                    </div>
+
+                    <button id="clear-button" class="clear-button" type="button">Clear</button>
+
+                </div>
+
+                <div id="calculator-view">
+
+                    <label class="input-label" for="expression">Expression</label>
+
+                    <input id="expression" class="math-input" type="text"
+
+                        placeholder="e.g. (12 + 8) * 3" autocomplete="off"
+
+                        spellcheck="false">
+
+                    <div class="keypad" id="keypad">
+
+                        <button data-insert="7">7</button>
+
+                        <button data-insert="8">8</button>
+
+                        <button data-insert="9">9</button>
+
+                        <button data-insert="/">÷</button>
+
+                        <button data-insert="4">4</button>
+
+                        <button data-insert="5">5</button>
+
+                        <button data-insert="6">6</button>
+
+                        <button data-insert="*">×</button>
+
+                        <button data-insert="1">1</button>
+
+                        <button data-insert="2">2</button>
+
+                        <button data-insert="3">3</button>
+
+                        <button data-insert="-">−</button>
+
+                        <button data-insert="0">0</button>
+
+                        <button data-insert=".">.</button>
+
+                        <button data-insert="(">(</button>
+
+                        <button data-insert=")">)</button>
+
+                        <button data-insert="**2">x²</button>
+
+                        <button data-insert="**">xʸ</button>
+
+                        <button data-insert="sqrt(">√</button>
+
+                        <button data-insert="pi">π</button>
+
+                        <button data-insert="%">%</button>
+
+                        <button data-insert="+">+</button>
+
+                        <button data-action="backspace">⌫</button>
+
+                        <button data-action="equals" class="equals">=</button>
+
+                    </div>
+
+                    <p class="hint">You can type directly or use the keypad.</p>
+
+                </div>
+
+                <div id="solver-view" hidden>
+
+                    <label class="input-label" for="equation">Equation</label>
+
+                    <input id="equation" class="math-input" type="text"
+
+                        placeholder="e.g. 2*x + 5 = 15" autocomplete="off"
+
+                        spellcheck="false">
+
+                    <p class="hint">Use * for multiplication. Example: 2*x + 5 = 15</p>
+
+                </div>
+
+                <div id="systems-view" hidden>
+
+                    <label class="input-label" for="equation-one">Equation 1</label>
+
+                    <input id="equation-one" class="math-input system-input"
+
+                        type="text" placeholder="e.g. x + y = 10">
+
+                    <label class="input-label" for="equation-two">Equation 2</label>
+
+                    <input id="equation-two" class="math-input system-input"
+
+                        type="text" placeholder="e.g. x - y = 2">
+
+                    <p class="hint">Enter two equations using the same variables.</p>
+
+                </div>
+
+                <button id="solve-button" class="solve-button" type="button">
+
+                    Calculate Result <span>→</span>
+
+                </button>
+
+                <section id="result-panel" class="result-panel"
+
+                    aria-live="polite" hidden>
+
+                    <div class="result-top">
+
+                        <p class="eyebrow">YOUR RESULT</p>
+
+                        <span class="result-mark">✓</span>
+
+                    </div>
+
+                    <div id="result-content" class="result-content"></div>
+
+                </section>
+
+            </div>
+
+            <p class="footer-note">QUESTCALC <span>·</span> BUILT FOR CURIOUS MINDS</p>
+
+        </section>
+
+    </main>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>
