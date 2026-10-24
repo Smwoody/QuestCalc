@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -8,198 +9,224 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="theme-color" content="#080a09">
+    <title>QuestCalc</title>
 
-    <title>QuestCalc | Math Made Clear</title>
+    <meta
+        name="description"
+        content="QuestCalc is a calculator and step-by-step math solver for students."
+    >
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="theme-color" content="#33E85D">
+    <meta name="mobile-web-app-capable" content="yes">
 
+    <!-- Progressive Web App Manifest -->
+    <link
+        rel="manifest"
+        href="{{ url_for('static', filename='manifest.json') }}"
+    >
+
+    <!-- QuestCalc App Icons -->
+    <link
+        rel="icon"
+        type="image/png"
+        href="{{ url_for('static', filename='icon-192.png') }}"
+    >
+
+    <link
+        rel="apple-touch-icon"
+        href="{{ url_for('static', filename='icon-192.png') }}"
+    >
+
+    <!-- iOS Home Screen Support -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta
+        name="apple-mobile-web-app-status-bar-style"
+        content="black"
+    >
+    <meta name="apple-mobile-web-app-title" content="QuestCalc">
+
+    <!-- Stylesheet -->
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
 </head>
 
 <body>
+    <main class="app-container">
 
-    <main class="app">
+        <!-- Header -->
+        <header class="app-header">
+            <h1>
+                <span class="quest">QUEST</span><span class="calc">CALC</span>
+            </h1>
 
-        <header class="topbar">
-
-            <a class="brand" href="/">
-
-                <span>QUEST</span><span class="green">CALC</span>
-
-            </a>
-
-            <span class="status"><span class="status-dot"></span> READY TO SOLVE</span>
-
+            <p>Calculate smarter. Learn step by step.</p>
         </header>
 
-        <section class="hero">
-
-            <p class="eyebrow">YOUR PERSONAL MATH WORKSPACE</p>
-
-            <h1>Think it through.<br><span class="green">Solve it clearly.</span></h1>
-
-            <p class="subtitle">Calculate, solve equations, and understand every step.</p>
-
-        </section>
-
-        <section class="workspace">
-
-            <nav class="modes" aria-label="Calculator modes">
-
-                <button class="mode active" data-mode="calculator">Calculator</button>
-
-                <button class="mode" data-mode="solver">Equation Solver</button>
-
-                <button class="mode" data-mode="systems">Systems</button>
-
-            </nav>
-
-            <div class="panel">
-
-                <div class="panel-heading">
-
-                    <div>
-
-                        <p class="eyebrow" id="mode-label">STANDARD CALCULATOR</p>
-
-                        <h2 id="panel-title">Calculator</h2>
-
-                    </div>
-
-                    <button id="clear-button" class="clear-button" type="button">Clear</button>
-
-                </div>
-
-                <div id="calculator-view">
-
-                    <label class="input-label" for="expression">Expression</label>
-
-                    <input id="expression" class="math-input" type="text"
-
-                        placeholder="e.g. (12 + 8) * 3" autocomplete="off"
-
-                        spellcheck="false">
-
-                    <div class="keypad" id="keypad">
-
-                        <button data-insert="7">7</button>
-
-                        <button data-insert="8">8</button>
-
-                        <button data-insert="9">9</button>
-
-                        <button data-insert="/">÷</button>
-
-                        <button data-insert="4">4</button>
-
-                        <button data-insert="5">5</button>
-
-                        <button data-insert="6">6</button>
-
-                        <button data-insert="*">×</button>
-
-                        <button data-insert="1">1</button>
-
-                        <button data-insert="2">2</button>
-
-                        <button data-insert="3">3</button>
-
-                        <button data-insert="-">−</button>
-
-                        <button data-insert="0">0</button>
-
-                        <button data-insert=".">.</button>
-
-                        <button data-insert="(">(</button>
-
-                        <button data-insert=")">)</button>
-
-                        <button data-insert="**2">x²</button>
-
-                        <button data-insert="**">xʸ</button>
-
-                        <button data-insert="sqrt(">√</button>
-
-                        <button data-insert="pi">π</button>
-
-                        <button data-insert="%">%</button>
-
-                        <button data-insert="+">+</button>
-
-                        <button data-action="backspace">⌫</button>
-
-                        <button data-action="equals" class="equals">=</button>
-
-                    </div>
-
-                    <p class="hint">You can type directly or use the keypad.</p>
-
-                </div>
-
-                <div id="solver-view" hidden>
-
-                    <label class="input-label" for="equation">Equation</label>
-
-                    <input id="equation" class="math-input" type="text"
-
-                        placeholder="e.g. 2*x + 5 = 15" autocomplete="off"
-
-                        spellcheck="false">
-
-                    <p class="hint">Use * for multiplication. Example: 2*x + 5 = 15</p>
-
-                </div>
-
-                <div id="systems-view" hidden>
-
-                    <label class="input-label" for="equation-one">Equation 1</label>
-
-                    <input id="equation-one" class="math-input system-input"
-
-                        type="text" placeholder="e.g. x + y = 10">
-
-                    <label class="input-label" for="equation-two">Equation 2</label>
-
-                    <input id="equation-two" class="math-input system-input"
-
-                        type="text" placeholder="e.g. x - y = 2">
-
-                    <p class="hint">Enter two equations using the same variables.</p>
-
-                </div>
-
-                <button id="solve-button" class="solve-button" type="button">
-
-                    Calculate Result <span>→</span>
-
-                </button>
-
-                <section id="result-panel" class="result-panel"
-
-                    aria-live="polite" hidden>
-
-                    <div class="result-top">
-
-                        <p class="eyebrow">YOUR RESULT</p>
-
-                        <span class="result-mark">✓</span>
-
-                    </div>
-
-                    <div id="result-content" class="result-content"></div>
-
-                </section>
-
+        <!-- Mode Selector -->
+        <nav class="mode-selector" aria-label="Calculator modes">
+            <button
+                type="button"
+                class="mode active"
+                data-mode="calculator"
+            >
+                Calculator
+            </button>
+
+            <button
+                type="button"
+                class="mode"
+                data-mode="solver"
+            >
+                Equation Solver
+            </button>
+
+            <button
+                type="button"
+                class="mode"
+                data-mode="systems"
+            >
+                Systems
+            </button>
+        </nav>
+
+        <!-- Calculator View -->
+        <section id="calculator-view" class="calculator-view">
+            <p id="mode-label">STANDARD CALCULATOR</p>
+
+            <div class="calculator-display">
+                <label for="expression">Expression</label>
+
+                <input
+                    type="text"
+                    id="expression"
+                    placeholder="Enter an expression"
+                    autocomplete="off"
+                    autocapitalize="off"
+                    spellcheck="false"
+                >
             </div>
 
-            <p class="footer-note">QUESTCALC <span>·</span> BUILT FOR CURIOUS MINDS</p>
+            <div id="keypad" class="keypad"></div>
+        </section>
 
+        <!-- Equation Solver View -->
+        <section
+            id="solver-view"
+            class="solver-view"
+            hidden
+        >
+            <h2>Solve an Equation</h2>
+
+            <p>Enter an equation to see your answer and solution steps.</p>
+
+            <label for="equation">Equation</label>
+
+            <input
+                type="text"
+                id="equation"
+                placeholder="Example: 2*x + 5 = 15"
+                autocomplete="off"
+                autocapitalize="off"
+                spellcheck="false"
+            >
+
+            <button
+                type="button"
+                id="solve-button"
+                class="primary-button"
+            >
+                <span>Calculate Result </span>
+            </button>
+        </section>
+
+        <!-- Systems of Equations View -->
+        <section
+            id="systems-view"
+            class="systems-view"
+            hidden
+        >
+            <h2>Systems of Equations</h2>
+
+            <p>Enter two equations to solve for both variables.</p>
+
+            <label for="equation-one">First equation</label>
+
+            <input
+                type="text"
+                id="equation-one"
+                placeholder="Example: x + y = 10"
+                autocomplete="off"
+                autocapitalize="off"
+                spellcheck="false"
+            >
+
+            <label for="equation-two">Second equation</label>
+
+            <input
+                type="text"
+                id="equation-two"
+                placeholder="Example: x - y = 2"
+                autocomplete="off"
+                autocapitalize="off"
+                spellcheck="false"
+            >
+
+            <button
+                type="button"
+                id="solve-system-button"
+                class="primary-button"
+            >
+                <span>Solve System</span>
+            </button>
+        </section>
+
+        <!-- Results Panel -->
+        <section
+            id="result-panel"
+            class="result-panel"
+            aria-live="polite"
+            hidden
+        >
+            <div class="result-header">
+                <h2 id="panel-title">Your Result</h2>
+
+                <button
+                    type="button"
+                    id="clear-button"
+                >
+                    Clear
+                </button>
+                
+            </div>
+
+            <div
+                id="result-content"
+                class="result-content"
+            ></div>
         </section>
 
     </main>
 
+    <!-- Main Application JavaScript -->
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 
+    <!-- Progressive Web App Service Worker -->
+    <script>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", function() {
+                navigator.serviceWorker.register(
+                    "{{ url_for('static', filename='service-worker.js') }}"
+                ).catch(function(error) {
+                    console.error(
+                        "QuestCalc service worker registration failed:",
+                        error
+                    );
+                });
+            });
+        }
+    </script>
 </body>
 
 </html>
