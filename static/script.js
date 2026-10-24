@@ -177,20 +177,47 @@ async function apiRequest(endpoint, data) {
 
 
 function displayResult(result, title) {
-    
+
     if (result === null || result === undefined) {
         showError("No result was returned. Please try again.");
         return;
     }
 
-    // Convert JSON strings into objects when necessary.
-    if (typeof result === "string") {
-        try {
-            result = JSON.parse(result);
-        } catch {
-            showResults(title, result);
-            return;
+    // Parse a JSON string when the API returns one.
+    function parseJSON(value) {
+        if (typeof value !== "string") {
+            return value;
         }
+
+        try {
+            return JSON.parse(value);
+        } catch {
+            return value;
+        }
+    }
+
+    result = parseJSON(result);
+
+    // Some responses contain the complete JSON inside "answer".
+    if (
+        result &&
+        typeof result === "object" &&
+        typeof result.answer === "string"
+    ) {
+        const nested = parseJSON(result.answer);
+
+        if (
+            nested &&
+            typeof nested === "object" &&
+            (nested.answer !== undefined || nested.steps !== undefined)
+        ) {
+            result = { ...result, ...nested };
+        }
+    }
+
+    if (typeof result === "string") {
+        showResults(title, result);
+        return;
     }
 
     const container = document.createElement("div");
@@ -215,9 +242,7 @@ function displayResult(result, title) {
         container.appendChild(answerText);
     }
 
-    const steps = result.steps;
-
-    if (Array.isArray(steps) && steps.length > 0) {
+    if (Array.isArray(result.steps) && result.steps.length > 0) {
         const stepsHeading = document.createElement("h3");
         stepsHeading.textContent = "Step-by-Step Solution";
         container.appendChild(stepsHeading);
@@ -225,7 +250,7 @@ function displayResult(result, title) {
         const stepsList = document.createElement("ul");
         stepsList.className = "solution-steps";
 
-        steps.forEach(function(step) {
+        result.steps.forEach(function(step) {
             const item = document.createElement("li");
 
             item.textContent =
@@ -239,7 +264,7 @@ function displayResult(result, title) {
         container.appendChild(stepsList);
     }
 
-    if (answer === undefined && !Array.isArray(steps)) {
+    if (answer === undefined && !Array.isArray(result.steps)) {
         const resultText = document.createElement("pre");
         resultText.textContent = JSON.stringify(result, null, 2);
         container.appendChild(resultText);
