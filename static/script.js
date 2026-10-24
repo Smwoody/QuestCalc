@@ -175,15 +175,22 @@ async function apiRequest(endpoint, data) {
 // FORMAT SOLUTION STEPS
 // ========================================
 
-function displayResult(result, title) {
-    if (typeof result === "string") {
-        showResults(title, result);
-        return;
-    }
 
+function displayResult(result, title) {
+    
     if (result === null || result === undefined) {
         showError("No result was returned. Please try again.");
         return;
+    }
+
+    // Convert JSON strings into objects when necessary.
+    if (typeof result === "string") {
+        try {
+            result = JSON.parse(result);
+        } catch {
+            showResults(title, result);
+            return;
+        }
     }
 
     const container = document.createElement("div");
@@ -197,11 +204,14 @@ function displayResult(result, title) {
 
         const answerText = document.createElement("p");
         answerText.className = "answer";
-        answerText.textContent =
+
+        const boldAnswer = document.createElement("strong");
+        boldAnswer.textContent =
             typeof answer === "object"
                 ? JSON.stringify(answer)
                 : String(answer);
 
+        answerText.appendChild(boldAnswer);
         container.appendChild(answerText);
     }
 
@@ -212,16 +222,16 @@ function displayResult(result, title) {
         stepsHeading.textContent = "Step-by-Step Solution";
         container.appendChild(stepsHeading);
 
-        const stepsList = document.createElement("ol");
+        const stepsList = document.createElement("ul");
+        stepsList.className = "solution-steps";
 
         steps.forEach(function(step) {
             const item = document.createElement("li");
 
-            if (typeof step === "string") {
-                item.textContent = step;
-            } else {
-                item.textContent = JSON.stringify(step);
-            }
+            item.textContent =
+                typeof step === "string"
+                    ? step
+                    : JSON.stringify(step);
 
             stepsList.appendChild(item);
         });
@@ -247,6 +257,7 @@ function displayResult(result, title) {
         panelTitle.textContent = title;
     }
 }
+
 
 // ========================================
 // CALCULATOR
@@ -442,7 +453,7 @@ const keypadButtons = [
     { label: ".", value: "." },
 
     { label: "0", value: "0" },
-    
+
     { label: "=", value: "EQUALS", type: "equals" }
 ];
 
